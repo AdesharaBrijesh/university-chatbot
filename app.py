@@ -2,6 +2,7 @@ import streamlit as st
 import google.generativeai as genai
 import json
 from datetime import datetime
+from database import init_database, get_course_data, save_chat
 
 # Must be the first Streamlit command
 st.set_page_config(
@@ -11,6 +12,10 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+
+# Initialize database
+init_database()
+
 # Configure Gemini AI
 GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 genai.configure(api_key=GOOGLE_API_KEY)
@@ -18,14 +23,8 @@ genai.configure(api_key=GOOGLE_API_KEY)
 # Initialize Gemini model
 model = genai.GenerativeModel('gemini-pro')
 
-# University data
-data = {
-    "courses": {
-        "B.Tech": {"duration": "4 years", "fees": "60,000 INR per semester", "semesters": 8, "subjects": {"Sem 1": ["Mathematics 1", "Physics", "Chemistry", "Engineering Mechanics", "Computer Programming"]}},
-        "B.Sc": {"duration": "3 years", "fees": "40,000 INR per semester", "semesters": 6, "subjects": {"Sem 1": ["Biology", "Chemistry", "Physics", "Mathematics", "Computer Applications"]}},
-        "BCA": {"duration": "3 years", "fees": "50,000 INR per semester", "semesters": 6, "subjects": {"Sem 1": ["C Programming", "Digital Electronics", "Mathematics", "Statistics", "English"]}}
-    }
-}
+# Get course data from database
+data = {"courses": get_course_data()}
 
 # Create a context for the AI
 context = f"""
@@ -60,9 +59,9 @@ if 'chat' not in st.session_state:
 
 def get_ai_response(user_input):
     try:
-        # Add context to the user's question
-        prompt = f"""Context: {context}\n\nUser: {user_input}\n\nResponse:"""
+        prompt = f"Context: {context}\n\nUser: {user_input}\n\nResponse:"
         response = st.session_state.chat.send_message(prompt)
+        save_chat(user_input, response.text)
         return response.text
     except Exception as e:
         return f"I apologize, but I encountered an error. Please try asking your question again. Error: {str(e)}"

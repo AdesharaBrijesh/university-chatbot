@@ -1,3 +1,7 @@
 streamlit
 google-generativeai
 python-dotenv
+pymongo
+pandas
+bcrypt
+dnspython
