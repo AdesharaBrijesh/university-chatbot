@@ -1,59 +1,136 @@
-# University Course Assistant Chatbot
+# 🎓 University Course Assistant Chatbot 🤖
 
-This project is a University Course Assistant Chatbot built using Streamlit and Google Gemini AI (Gemini Pro). It helps users explore university courses, admission processes, and related queries through an interactive chat interface.
+Welcome to the **University Course Assistant Chatbot** – your AI-powered guide for navigating university courses, admissions, and campus life! Built with cutting-edge AI and designed for students by students. 🌟
 
-## Features
-- Provides information on available university courses, including duration, fees, and subjects.
-- Handles admission-related queries and general questions.
-- Interactive chat interface with saved chat history.
-- Sidebar with quick links, example questions, and contact support information.
+---
 
-## Technologies Used
-- **Streamlit**: For building the web-based user interface.
-- **Google Gemini AI (Gemini Pro)**: For generating conversational responses.
-- **Python**: Core language for backend logic.
-- **SQLite**: For storing course data and chat history.
+## 🚀 Features That Make Life Easier
 
-## Setup Instructions
-1. Clone the repository from GitHub:
+### 🤖 **Smart Conversational AI**
+- Natural Q/A about courses, fees, subjects, and admission criteria
+- Context-aware responses powered by **Google Gemini Pro**
+- Handles both general and specific university queries
+
+### 📊 **Admin Power Dashboard**
+- **Real-time Analytics**: Visualize chat trends and user interactions
+- **Data Management**: Update course info, fees, and university details
+- **Export Magic**: Download chat histories as CSV with one click
+- **User Insights**: Track popular queries and response effectiveness
+
+### � **Always Learning**
+- MongoDB database stores conversations for continuous improvement
+- Modular architecture for easy feature additions
+- Daily backup system for data security
+
+### 💬 Rich Interaction
+- Persistent chat history (never lose your conversation!)
+- Quick-action sidebar with sample questions
+- Support ticket integration for human assistance
+
+---
+
+## 🛠️ Tech Stack Powering the Magic
+
+| **Area**       | **Technologies**                                                                 |
+|-----------------|----------------------------------------------------------------------------------|
+| **AI Engine**   | ![Google Gemini](https://img.shields.io/badge/Google_Gemini_Pro-4285F4?style=flat&logo=google&logoColor=white) |
+| **Backend**     | ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white) ![SQLite](https://img.shields.io/badge/SQLite-07405E?logo=sqlite&logoColor=white) ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white) |
+| **Frontend**    | ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white) |
+<!-- | **DevOps**      | ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?logo=github-actions&logoColor=white) | -->
+
+---
+
+## ⚡ Quick Start Guide
+
+### Prerequisites
+- Python 3.10+
+- Google Cloud account (for Gemini API)
+- MongoDB Atlas account (free tier works!)
+
+### 🛠️ Installation
+
+1. **Clone the repository**
    ```bash
    git clone https://github.com/AdesharaBrijesh/university-chatbot.git
-   ```
-2. Navigate to the project directory:
-   ```bash
    cd university-chatbot
    ```
-3. Install required dependencies:
+
+2. **Set up virtual environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # Linux/Mac
+   venv\Scripts\activate  # Windows
+   ```
+
+3. **Install dependencies**
    ```bash
    pip install -r requirements.txt
    ```
-4. Set up your Google API Key in `secrets.toml`:
+
+4. **Configure secrets**
+   Create `.streamlit/secrets.toml` with:
    ```toml
-   GOOGLE_API_KEY = "your_google_api_key_here"
+   GOOGLE_API_KEY = "your_google_api_key"
+   MONGO_URI = "your_mongodb_connection_string"
    ```
-5. Run the Streamlit app:
+
+5. **Launch the app!**
    ```bash
    streamlit run app.py
    ```
 
-## Live Demo
-Check out the live demo of the chatbot [here](https://university-chatbot-brijesh.streamlit.app/).
+---
 
-## Repository
-Explore the full project code on GitHub: [university-chatbot](https://github.com/AdesharaBrijesh/university-chatbot)
+## 🌐 Live Demo & Admin Access
 
-## Screenshots
-- **Chat Interface**: Interactive and user-friendly chat interface with AI-generated responses.
-- **Sidebar**: Quick access to example questions, links, and contact details.
+👉 **Public Chat Interface**: [Live Demo](https://university-chatbot-brijesh.streamlit.app/)  
+🔒 **Admin Dashboard**: `/admin` route (password protected)
 
-## Contributing
-Contributions are welcome! Feel free to fork the repository, create a branch, and submit a pull request.
-
-## License
-This project is licensed under the MIT License.
-
+*Admin credentials available to contributors – reach out!*
 
 ---
 
-Thank you for checking out the University Course Assistant Chatbot! 🚀🎓
+## 📸 See It in Action
 
+| **Chat Interface** | **Admin Dashboard** |
+|--------------------|----------------------|
+| ![Chat Preview](https://github.com/user-attachments/assets/b3de13fa-0b53-4d14-a694-ee0c7b6db5d2) | ![Admin Preview](https://github.com/user-attachments/assets/ddfdbf13-af8e-406f-84eb-d5424155b794) |
+
+---
+
+## 🤝 How to Contribute
+
+We 💜 contributors! Here's how you can help:
+
+1. **Fork** the repository
+2. **Create** a feature branch:  
+   `git checkout -b amazing-feature`
+3. **Commit** your changes:  
+   `git commit -m 'Add some amazing feature'`
+4. **Push** to the branch:  
+   `git push origin amazing-feature`
+5. Open a **Pull Request**
+
+**First time contributing?** Check our [Good First Issues](https://github.com/AdesharaBrijesh/university-chatbot/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22)!
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## ❓ Need Help? Found a Bug?
+
+Open an [issue](https://github.com/AdesharaBrijesh/university-chatbot/issues) or reach out to our team:
+
+📧 **Email**: [adesharabrijesh8@gmail.com](mailto:adesharabrijesh8@gmail.com)  
+<!-- 💬 **Discord**: [Join our server](https://discord.gg/your-invite-link) -->
+
+---
+
+Made with ❤️ by Brijesh Adeshara and **AMAZING CONTRIBUTORS** like YOU!  
+
+[![Star on GitHub](https://img.shields.io/github/stars/AdesharaBrijesh/university-chatbot.svg?style=social)](https://github.com/AdesharaBrijesh/university-chatbot/stargazers)  
+*Give us a star if you find this useful!* ⭐
