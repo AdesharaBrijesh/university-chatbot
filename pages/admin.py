@@ -9,6 +9,14 @@ from database import (
 import json
 from datetime import datetime
 
+# Must be the first Streamlit command
+st.set_page_config(
+    page_title="University Course Assistant",
+    page_icon="🎓",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 def show_login():
     st.title("Admin Login")
     with st.form("login_form"):
