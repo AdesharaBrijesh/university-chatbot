@@ -130,7 +130,7 @@ st.markdown("""
 
 # Sidebar
 with st.sidebar:
-    st.image("https://via.placeholder.com/150", caption="University Logo")
+    st.image("./Resources/Logo.png", caption="University Logo")
     st.title("Course Assistant")
     st.markdown("---")
     st.info("👋 Welcome to our interactive course assistant! I'm here to help you explore our academic programs and answer your questions about admissions.")
