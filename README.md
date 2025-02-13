@@ -2,9 +2,6 @@
 
 Welcome to the **University Course Assistant Chatbot** – your AI-powered guide for navigating university courses, admissions, and campus life! Built with cutting-edge AI and designed for students by students. 🌟
 
-![Chatbot Demo](https://via.placeholder.com/800x400.png?text=Chatbot+Interface+Demo)
-*Interactive chat interface with real-time responses*
-
 ---
 
 ## 🚀 Features That Make Life Easier
@@ -97,7 +94,7 @@ Welcome to the **University Course Assistant Chatbot** – your AI-powered guide
 
 | **Chat Interface** | **Admin Dashboard** |
 |--------------------|----------------------|
-| ![Chat Preview](https://via.placeholder.com/400x250.png?text=Student+View) | ![Admin Preview](https://via.placeholder.com/400x250.png?text=Admin+View) |
+| ![Chat Preview](https://github.com/user-attachments/assets/b3de13fa-0b53-4d14-a694-ee0c7b6db5d2) | ![Admin Preview](https://github.com/user-attachments/assets/ddfdbf13-af8e-406f-84eb-d5424155b794) |
 
 ---
 
