@@ -191,6 +191,7 @@ with input_col1:
                               key="input", 
                               placeholder="e.g., What courses do you offer?")
 with input_col2:
+    st.empty()
     send_button = st.button("Send 📤", use_container_width=True)
 
 if send_button and user_input:
