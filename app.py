@@ -186,7 +186,7 @@ for user, bot in st.session_state.chat_history:
 st.markdown("---")
 input_col1, input_col2 = st.columns([6, 1])
 with input_col1:
-    user_input = st.text_input( 
+    user_input = st.text_input("Ask your question here...", 
                               value=st.session_state.current_question,
                               key="input", 
                               placeholder="e.g., What courses do you offer?")
