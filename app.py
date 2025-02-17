@@ -186,7 +186,7 @@ for user, bot in st.session_state.chat_history:
 st.markdown("---")
 input_col1, input_col2 = st.columns([6, 1])
 with input_col1:
-    user_input = st.text_input("Ask your question here...", 
+    user_input = st.text_input( 
                               value=st.session_state.current_question,
                               key="input", 
                               placeholder="e.g., What courses do you offer?")
@@ -206,7 +206,7 @@ if send_button and user_input:
 st.markdown(
     """
     <div style='text-align: center; color: gray; padding: 1rem;'>
-        © 2025 University Name. All rights reserved.
+        © 2025 Brijesh Adeshara. All rights reserved.
     </div>
     """, 
     unsafe_allow_html=True
