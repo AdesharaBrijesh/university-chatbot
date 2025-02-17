@@ -89,7 +89,15 @@ st.markdown("""
     .main {
         padding: 2rem;
     }
-   
+    .stButton>button {
+        background-color: #000000;
+        color: white;
+        border-radius: 20px;
+        padding: 0.5rem 2rem;
+        border: none;
+        height: 42px;
+        margin-top: 10%;
+    }
     .stTextInput>div>div>input {
         border-radius: 20px;
     }
@@ -185,7 +193,7 @@ with input_col1:
                               placeholder="e.g., What courses do you offer?")
 with input_col2:
     st.text(" ")
-    send_button = st.button("Ask", use_container_width=True)
+    send_button = st.button("Send 📤", use_container_width=True)
 
 if send_button and user_input:
     # Get AI response
