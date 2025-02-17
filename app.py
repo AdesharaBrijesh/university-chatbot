@@ -96,7 +96,7 @@ st.markdown("""
         padding: 0.5rem 2rem;
         border: none;
         height: 42px;
-        margin-top: 10%;
+        margin-top: 8%;
     }
     .stTextInput>div>div>input {
         border-radius: 20px;
