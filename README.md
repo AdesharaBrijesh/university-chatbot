@@ -4,6 +4,23 @@ Welcome to the **University Course Assistant Chatbot** – your AI-powered guide
 
 ---
 
+## 🌐 Live Demo & Admin Access
+
+👉 **Public Chat Interface**: [Live Demo](https://university-chatbot-brijesh.streamlit.app/)  
+🔒 **Admin Dashboard**: `/admin` route (password protected)
+
+*Admin credentials available to contributors – reach out!*
+
+---
+
+## 📸 See It in Action
+
+| **Chat Interface** | **Admin Dashboard** |
+|--------------------|----------------------|
+| ![Chat Preview](https://github.com/user-attachments/assets/b3de13fa-0b53-4d14-a694-ee0c7b6db5d2) | ![Admin Preview](https://github.com/user-attachments/assets/ddfdbf13-af8e-406f-84eb-d5424155b794) |
+
+---
+
 ## 🚀 Features That Make Life Easier
 
 ### 🤖 **Smart Conversational AI**
@@ -78,23 +95,6 @@ Welcome to the **University Course Assistant Chatbot** – your AI-powered guide
    ```bash
    streamlit run app.py
    ```
-
----
-
-## 🌐 Live Demo & Admin Access
-
-👉 **Public Chat Interface**: [Live Demo](https://university-chatbot-brijesh.streamlit.app/)  
-🔒 **Admin Dashboard**: `/admin` route (password protected)
-
-*Admin credentials available to contributors – reach out!*
-
----
-
-## 📸 See It in Action
-
-| **Chat Interface** | **Admin Dashboard** |
-|--------------------|----------------------|
-| ![Chat Preview](https://github.com/user-attachments/assets/b3de13fa-0b53-4d14-a694-ee0c7b6db5d2) | ![Admin Preview](https://github.com/user-attachments/assets/ddfdbf13-af8e-406f-84eb-d5424155b794) |
 
 ---
 
