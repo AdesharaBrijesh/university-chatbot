@@ -179,8 +179,8 @@ for user, bot in st.session_state.chat_history:
             st.markdown(f"""
                 <div class="chat-message bot-message">
                     <strong>Assistant:</strong> {bot}
-                    <small style="color: gray;">{datetime.now().strftime('%H:%M')}</small>
                 </div>
+                <small style="color: gray;">{datetime.now().strftime('%H:%M')}</small>
             """, unsafe_allow_html=True)
 
 # Input container
