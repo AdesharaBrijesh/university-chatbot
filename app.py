@@ -2,6 +2,7 @@ import streamlit as st
 import google.generativeai as genai
 import json
 from datetime import datetime
+import pytz
 from database import init_database, get_course_data, save_chat
 
 # Must be the first Streamlit command
@@ -51,7 +52,7 @@ Example interactions:
 
 # Initialize chat history in session state
 if 'chat_history' not in st.session_state:
-    st.session_state.chat_history = []
+    st.session_state.chat_history = []  # This will store (user_msg, bot_msg, timestamp) tuples
 if 'current_question' not in st.session_state:
     st.session_state.current_question = ""
 if 'chat' not in st.session_state:
@@ -165,14 +166,22 @@ st.markdown("---")
 chat_container = st.container()
 
 # Display chat history
-for user, bot in st.session_state.chat_history:
+for message_data in st.session_state.chat_history:
     with chat_container:
         col1, col2 = st.columns([6,4])
+        
+        # Handle both formats of chat history (with and without timestamp)
+        if len(message_data) == 3:
+            user, bot, timestamp = message_data
+        else:
+            user, bot = message_data
+            timestamp = datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%H:%M')
+            
         with col1:
             st.markdown(f"""
                 <div class="chat-message user-message">
                     <strong>You:</strong> {user}
-                    <small style="color: gray;">{datetime.now().strftime('%H:%M')}</small>
+                    <small style="color: gray;">{timestamp}</small>
                 </div>
             """, unsafe_allow_html=True)
         with col2:
@@ -180,7 +189,7 @@ for user, bot in st.session_state.chat_history:
                 <div class="chat-message bot-message">
                     <strong>Assistant:</strong> {bot}
                 </div>
-                <small style="color: gray;">{datetime.now().strftime('%H:%M')}</small>
+                <small style="color: gray;">{timestamp}</small>
             """, unsafe_allow_html=True)
 
 # Input container
@@ -198,8 +207,13 @@ with input_col2:
 if send_button and user_input:
     # Get AI response
     ai_response = get_ai_response(user_input)
-    # Update chat history
-    st.session_state.chat_history.append((user_input, ai_response))
+    
+    # Get current time in IST
+    current_time = datetime.now(pytz.timezone('Asia/Kolkata')).strftime('%H:%M')
+    
+    # Update chat history with timestamp
+    st.session_state.chat_history.append((user_input, ai_response, current_time))
+    
     # Clear input
     st.session_state.current_question = ""
     st.rerun()
