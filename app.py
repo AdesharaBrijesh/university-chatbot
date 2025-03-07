@@ -21,7 +21,7 @@ GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # Initialize Gemini model
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('gemini')
 
 # Get course data from database
 data = {"courses": get_course_data()}
