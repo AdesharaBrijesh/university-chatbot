@@ -5,3 +5,4 @@ pymongo
 pandas
 bcrypt
 dnspython
+user_agents
