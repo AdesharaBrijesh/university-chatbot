@@ -3,7 +3,7 @@ import google.generativeai as genai
 import json
 from datetime import datetime
 import pytz
-from database import init_database, get_course_data, save_chat
+from database import init_database, get_course_data, save_chat, get_or_create_user_session
 
 # Must be the first Streamlit command
 st.set_page_config(
@@ -14,8 +14,9 @@ st.set_page_config(
 )
 
 
-# Initialize database
+# Initialize database and get user session
 init_database()
+user_id = get_or_create_user_session()
 
 # Configure Gemini AI
 GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
@@ -84,7 +85,7 @@ example_questions = [
 def set_question(question):
     st.session_state.current_question = question
 
-# Custom CSS (same as before)
+# Custom CSS with improved sidebar styling
 st.markdown("""
     <style>
     .main {
@@ -127,19 +128,53 @@ st.markdown("""
         background-color: #e9ecef;
         transform: translateX(5px);
     }
+    .sidebar-section {
+        background-color: white;
+        padding: 1rem;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .sidebar-header {
+        color: #333;
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #f0f0f0;
+    }
+    .sidebar-link {
+        display: block;
+        padding: 0.5rem;
+        color: #666;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: all 0.3s;
+    }
+    .sidebar-link:hover {
+        background-color: #f8f9fa;
+        color: #0066cc;
+    }
     </style>
 """, unsafe_allow_html=True)
 
-# Sidebar
+# Sidebar with improved styling
 with st.sidebar:
-    st.image("./Resources/Logo.png", caption="University Logo")
-    st.title("Course Assistant")
-    st.markdown("---")
-    st.info("👋 Welcome to our interactive course assistant! I'm here to help you explore our academic programs and answer your questions about admissions.")
+    st.image("./Resources/Logo.png", use_container_width=True)
+    
+    # Welcome Section
+    st.markdown("""
+        <div class="sidebar-section">
+            <div class="sidebar-header">👋 Welcome!</div>
+            <p>I'm here to help you explore our academic programs and answer your questions about admissions.</p>
+        </div>
+    """, unsafe_allow_html=True)
     
     # Example Questions Section
-    st.markdown("### 💭 Example Questions")
-    st.markdown("Click on any question to try it out:")
+    st.markdown("""
+        <div class="sidebar-section">
+            <div class="sidebar-header">💭 Example Questions</div>
+    """, unsafe_allow_html=True)
     
     for question in example_questions:
         if st.button(f"🔹 {question}", key=f"btn_{question}", 
@@ -148,15 +183,26 @@ with st.sidebar:
             set_question(question)
             st.rerun()
     
-    st.markdown("---")
-    st.markdown("### 🔗 Quick Links")
-    st.markdown("• [University Website](#)")
-    st.markdown("• [Admission Portal](#)")
-    st.markdown("• [Student Dashboard](#)")
+    st.markdown("</div>", unsafe_allow_html=True)
     
-    st.markdown("### 📞 Contact Support")
-    st.markdown("📞 Helpline: 1800-XXX-XXXX")
-    st.markdown("📧 Email: admissions@university.edu")
+    # Quick Links Section
+    st.markdown("""
+        <div class="sidebar-section">
+            <div class="sidebar-header">🔗 Quick Links</div>
+            <a href="#" class="sidebar-link">📚 University Website</a>
+            <a href="#" class="sidebar-link">🎓 Admission Portal</a>
+            <a href="#" class="sidebar-link">👤 Student Dashboard</a>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # Contact Support Section
+    st.markdown("""
+        <div class="sidebar-section">
+            <div class="sidebar-header">📞 Contact Support</div>
+            <p>📞 Helpline: 1800-XXX-XXXX</p>
+            <p>📧 Email: admissions@university.edu</p>
+        </div>
+    """, unsafe_allow_html=True)
 
 # Main chat interface
 st.title("🎓 University Course Assistant")
