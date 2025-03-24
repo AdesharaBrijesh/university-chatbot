@@ -5,4 +5,6 @@ pymongo
 pandas
 bcrypt
 dnspython
-user_agents
+user-agents
+plotly
+pytz

@@ -13,7 +13,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-
 # Initialize database and get user session
 init_database()
 user_id = get_or_create_user_session()
@@ -115,6 +114,11 @@ st.markdown("""
     }
     .bot-message {
         background-color: #F5F5F5;
+    }
+    .timestamp {
+        color: gray;
+        font-size: 0.8em;
+        margin-top: 8px;
     }
     .example-question {
         background-color: #f8f9fa;
@@ -227,16 +231,16 @@ for message_data in st.session_state.chat_history:
             st.markdown(f"""
                 <div class="chat-message user-message">
                     <strong>You:</strong> {user}
-                    <small style="color: gray;">{timestamp}</small>
                 </div>
             """, unsafe_allow_html=True)
+            st.caption(timestamp)
         with col2:
             st.markdown(f"""
                 <div class="chat-message bot-message">
-                    <strong>Assistant:</strong> {bot}
-                </div>
-                <small style="color: gray;">{timestamp}</small>
+                    <strong>Assistant:</strong>
+                    {bot}</div>
             """, unsafe_allow_html=True)
+            st.caption(timestamp)
 
 # Input container
 st.markdown("---")

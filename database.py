@@ -133,13 +133,23 @@ def get_or_create_user_session():
     return user_id
 
 def save_chat(user_message, bot_response):
-    """Save chat history to database with user ID"""
+    """Save chat history to database with user ID and course inquiry tracking"""
     user_id = get_or_create_user_session()
+    
+    # Extract course information from the message
+    courses = get_course_data()
+    course_inquiry = None
+    for course in courses.keys():
+        if course.lower() in user_message.lower():
+            course_inquiry = course
+            break
+    
     chat_data = {
         "timestamp": datetime.now(),
         "user_id": user_id,
         "user_message": user_message,
-        "bot_response": bot_response
+        "bot_response": bot_response,
+        "course_inquiry": course_inquiry
     }
     chat_collection.insert_one(chat_data)
 
@@ -223,10 +233,19 @@ def get_user_stats():
     ]
     
     daily_active = list(user_collection.aggregate(pipeline))
-    daily_active_users = [
-        {'date': item['_id'], 'count': item['count']}
-        for item in daily_active
-    ]
+    
+    # Ensure we have data for all 7 days
+    daily_active_users = []
+    for i in range(7):
+        date = (today_start - timedelta(days=i)).strftime('%Y-%m-%d')
+        count = next((item['count'] for item in daily_active if item['_id'] == date), 0)
+        daily_active_users.append({
+            'date': date,
+            'count': count
+        })
+    
+    # Sort by date in ascending order
+    daily_active_users.sort(key=lambda x: x['date'])
     
     return {
         'total_users': total_users,
@@ -237,3 +256,34 @@ def get_user_stats():
         'returning_users': returning_users,
         'daily_active_users': daily_active_users
     }
+
+def get_course_inquiry_stats():
+    """Get statistics about course inquiries"""
+    pipeline = [
+        {
+            '$match': {
+                'course_inquiry': {'$ne': None}
+            }
+        },
+        {
+            '$group': {
+                '_id': '$course_inquiry',
+                'count': {'$sum': 1}
+            }
+        },
+        {
+            '$sort': {'count': -1}
+        }
+    ]
+    
+    course_stats = list(chat_collection.aggregate(pipeline))
+    
+    # Convert to format suitable for pie chart
+    total_inquiries = sum(stat['count'] for stat in course_stats)
+    course_distribution = {
+        'labels': [stat['_id'] for stat in course_stats],
+        'values': [stat['count'] for stat in course_stats],
+        'total_inquiries': total_inquiries
+    }
+    
+    return course_distribution
