@@ -13,6 +13,7 @@ import json
 from datetime import datetime, timedelta
 import streamlit.components.v1 as components
 import plotly.express as px
+import pytz
 
 # Must be the first Streamlit command
 st.set_page_config(
@@ -401,14 +402,14 @@ def show_chat_analytics():
     with col1:
         start_date = st.date_input(
             "Start Date",
-            datetime.now() - timedelta(days=30),
+            datetime.now(pytz.timezone('Asia/Kolkata')) - timedelta(days=30),  # Use IST
             key="analytics_start_date",
             help="Select start date for filtering analytics"
         )
     with col2:
         end_date = st.date_input(
             "End Date",
-            datetime.now(),
+            datetime.now(pytz.timezone('Asia/Kolkata')),  # Use IST
             key="analytics_end_date",
             help="Select end date for filtering analytics"
         )

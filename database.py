@@ -5,6 +5,7 @@ import bcrypt
 import uuid
 import json
 from user_agents import parse
+import pytz
 
 # MongoDB connection
 MONGO_URI = st.secrets["MONGO_URI"]
@@ -134,24 +135,28 @@ def get_or_create_user_session():
 
 def save_chat(user_message, bot_response):
     """Save chat history to database with user ID and course inquiry tracking"""
-    user_id = get_or_create_user_session()
-    
-    # Extract course information from the message
-    courses = get_course_data()
-    course_inquiry = None
-    for course in courses.keys():
-        if course.lower() in user_message.lower():
-            course_inquiry = course
-            break
-    
-    chat_data = {
-        "timestamp": datetime.now(),
-        "user_id": user_id,
-        "user_message": user_message,
-        "bot_response": bot_response,
-        "course_inquiry": course_inquiry
-    }
-    chat_collection.insert_one(chat_data)
+    try:
+        user_id = get_or_create_user_session()
+        
+        # Extract course information from the message
+        courses = get_course_data()
+        course_inquiry = None
+        for course in courses.keys():
+            if course.lower() in user_message.lower():
+                course_inquiry = course
+                break
+        
+        chat_data = {
+            "timestamp": datetime.now(pytz.timezone('Asia/Kolkata')),
+            "user_id": user_id,
+            "user_message": user_message,
+            "bot_response": bot_response,
+            "course_inquiry": course_inquiry
+        }
+        chat_collection.insert_one(chat_data)
+    except Exception as e:
+        st.error("An error occurred while saving the chat. Please try again.")
+        print(f"Error saving chat: {str(e)}")  # Log the error for debugging
 
 def get_chat_history(user_id=None):
     """Get chat history, optionally filtered by user_id"""
@@ -175,87 +180,89 @@ def update_course_data(courses):
 
 def get_user_stats():
     """Get comprehensive user statistics."""
-    # Get current time and time boundaries
-    now = datetime.now()
-    today_start = datetime.combine(now.date(), datetime.min.time())
-    week_start = today_start - timedelta(days=7)
-    month_start = today_start - timedelta(days=30)
-    
-    # Total users
-    total_users = user_collection.count_documents({})
-    
-    # Active users today
-    active_today = user_collection.count_documents({
-        'last_active': {'$gte': today_start}
-    })
-    
-    # New users today
-    new_users_today = user_collection.count_documents({
-        'created_at': {'$gte': today_start}
-    })
-    
-    # Active users this week
-    active_this_week = user_collection.count_documents({
-        'last_active': {'$gte': week_start}
-    })
-    
-    # Active users this month
-    active_this_month = user_collection.count_documents({
-        'last_active': {'$gte': month_start}
-    })
-    
-    # Returning users (users who have accessed more than once)
-    returning_users = user_collection.count_documents({
-        'access_count': {'$gt': 1}
-    })
-    
-    # Daily active users for the last 7 days
-    pipeline = [
-        {
-            '$match': {
-                'last_active': {'$gte': week_start}
-            }
-        },
-        {
-            '$group': {
-                '_id': {
-                    '$dateToString': {
-                        'format': '%Y-%m-%d',
-                        'date': '$last_active'
-                    }
-                },
-                'count': {'$sum': 1}
-            }
-        },
-        {
-            '$sort': {'_id': 1}
-        }
-    ]
-    
-    daily_active = list(user_collection.aggregate(pipeline))
-    
-    # Ensure we have data for all 7 days
-    daily_active_users = []
-    for i in range(7):
-        date = (today_start - timedelta(days=i)).strftime('%Y-%m-%d')
-        count = next((item['count'] for item in daily_active if item['_id'] == date), 0)
-        daily_active_users.append({
-            'date': date,
-            'count': count
+    try:
+        now = datetime.now(pytz.timezone('Asia/Kolkata'))
+        today_start = datetime.combine(now.date(), datetime.min.time())
+        week_start = today_start - timedelta(days=7)
+        month_start = today_start - timedelta(days=30)
+        
+        # Total users
+        total_users = user_collection.count_documents({})
+        
+        # Active users today
+        active_today = user_collection.count_documents({
+            'last_active': {'$gte': today_start}
         })
-    
-    # Sort by date in ascending order
-    daily_active_users.sort(key=lambda x: x['date'])
-    
-    return {
-        'total_users': total_users,
-        'active_today': active_today,
-        'new_users_today': new_users_today,
-        'active_this_week': active_this_week,
-        'active_this_month': active_this_month,
-        'returning_users': returning_users,
-        'daily_active_users': daily_active_users
-    }
+        
+        # New users today
+        new_users_today = user_collection.count_documents({
+            'created_at': {'$gte': today_start}
+        })
+        
+        # Active users this week
+        active_this_week = user_collection.count_documents({
+            'last_active': {'$gte': week_start}
+        })
+        
+        # Active users this month
+        active_this_month = user_collection.count_documents({
+            'last_active': {'$gte': month_start}
+        })
+        
+        # Returning users
+        returning_users = user_collection.count_documents({
+            'access_count': {'$gt': 1}
+        })
+        
+        # Daily active users for the last 7 days
+        pipeline = [
+            {
+                '$match': {
+                    'last_active': {'$gte': week_start}
+                }
+            },
+            {
+                '$group': {
+                    '_id': {
+                        '$dateToString': {
+                            'format': '%Y-%m-%d',
+                            'date': '$last_active'
+                        }
+                    },
+                    'count': {'$sum': 1}
+                }
+            },
+            {
+                '$sort': {'_id': 1}
+            }
+        ]
+        
+        daily_active = list(user_collection.aggregate(pipeline))
+        
+        # Ensure we have data for all 7 days
+        daily_active_users = []
+        for i in range(7):
+            date = (today_start - timedelta(days=i)).strftime('%Y-%m-%d')
+            count = next((item['count'] for item in daily_active if item['_id'] == date), 0)
+            daily_active_users.append({
+                'date': date,
+                'count': count
+            })
+        
+        daily_active_users.sort(key=lambda x: x['date'])
+        
+        return {
+            'total_users': total_users,
+            'active_today': active_today,
+            'new_users_today': new_users_today,
+            'active_this_week': active_this_week,
+            'active_this_month': active_this_month,
+            'returning_users': returning_users,
+            'daily_active_users': daily_active_users
+        }
+    except Exception as e:
+        print(f"Error fetching user stats: {str(e)}")
+        return {}
 
 def get_course_inquiry_stats():
     """Get statistics about course inquiries"""

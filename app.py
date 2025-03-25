@@ -65,7 +65,8 @@ def get_ai_response(user_input):
         save_chat(user_input, response.text)
         return response.text
     except Exception as e:
-        return f"I apologize, but I encountered an error. Please try asking your question again. Error: {str(e)}"
+        st.error("An error occurred while getting a response from the AI. Please try again.")
+        return f"I apologize, but I encountered an error: {str(e)}"
 
 # Example questions
 example_questions = [
