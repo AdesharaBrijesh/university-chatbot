@@ -17,7 +17,7 @@ Welcome to the **University Course Assistant Chatbot** – your AI-powered guide
 
 | **Chat Interface** | **Admin Dashboard** |
 |--------------------|----------------------|
-| ![Chat Preview](https://github.com/user-attachments/assets/b3de13fa-0b53-4d14-a694-ee0c7b6db5d2) | ![Admin Preview](https://github.com/user-attachments/assets/ddfdbf13-af8e-406f-84eb-d5424155b794) |
+| ![Chat Preview](https://github.com/user-attachments/assets/b3de13fa-0b53-4d14-a694-ee0c7b6db5d2) | ![Admin Preview](https://github.com/user-attachments/assets/8aa2fd53-8c63-4f6b-b03c-115e7925ab99) |
 
 ---
 
